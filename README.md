@@ -45,3 +45,17 @@ Import-Module ./OpsToutatis.psd1 -Force
 Import-Module ./OpsToutatis.psd1 -Force
 Invoke-Pester -Path ./tests
 ```
+
+## Role deployment (recommended flow)
+
+Always run role deployment in dry-run mode first:
+
+```powershell
+Invoke-OpsDeploy -Role Demo-Hello -Target localhost -WhatIf
+```
+
+Then apply for real only after reviewing the generated plan:
+
+```powershell
+Invoke-OpsDeploy -Role Demo-Hello -Target localhost -Confirm:$false
+```

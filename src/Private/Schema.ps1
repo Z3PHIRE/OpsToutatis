@@ -304,6 +304,7 @@ function Get-OpsSupportedOperatingSystems {
     param()
 
     return @(
+        'WindowsServer2016',
         'WindowsServer2019',
         'WindowsServer2022',
         'WindowsServer2025',
@@ -340,6 +341,27 @@ function Get-OpsAvailableRoles {
     $rolesPath = Join-Path -Path $rolesPath -ChildPath 'Roles'
 
     if (Test-Path -LiteralPath $rolesPath) {
+        $roleDirectories = @(Get-ChildItem -LiteralPath $rolesPath -Directory)
+        foreach ($roleDirectory in $roleDirectories) {
+            $manifestPath = Join-Path -Path $roleDirectory.FullName -ChildPath 'role.psd1'
+            if (Test-Path -LiteralPath $manifestPath) {
+                try {
+                    $manifestData = Import-PowerShellDataFile -Path $manifestPath -ErrorAction Stop
+                    if ($manifestData -is [hashtable] -and $manifestData.ContainsKey('Id')) {
+                        $manifestRoleId = [string]$manifestData['Id']
+                        if (-not [string]::IsNullOrWhiteSpace($manifestRoleId)) {
+                            [void]$roleSet.Add($manifestRoleId)
+                            continue
+                        }
+                    }
+                }
+                catch {
+                }
+
+                [void]$roleSet.Add($roleDirectory.Name)
+            }
+        }
+
         $roleFiles = @(Get-ChildItem -LiteralPath $rolesPath -File)
         foreach ($roleFile in $roleFiles) {
             if ($roleFile.Name -eq '.gitkeep') {

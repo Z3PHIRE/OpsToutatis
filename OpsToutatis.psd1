@@ -23,7 +23,10 @@
         'Get-OpsCredential',
         'Invoke-OpsRemote',
         'Test-OpsTarget',
-        'Get-OpsTargetInfo'
+        'Get-OpsTargetInfo',
+        'Get-OpsRole',
+        'Show-OpsRoleCatalog',
+        'Invoke-OpsDeploy'
     )
     CmdletsToExport   = @()
     VariablesToExport = @()
