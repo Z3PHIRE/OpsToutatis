@@ -4,9 +4,11 @@ $moduleRoot = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 $sourceRoot = Join-Path -Path $moduleRoot -ChildPath 'src'
 $publicPath = Join-Path -Path $sourceRoot -ChildPath 'Public'
 $privatePath = Join-Path -Path $sourceRoot -ChildPath 'Private'
+$transportPath = Join-Path -Path $sourceRoot -ChildPath 'Transport'
 
 $publicScripts = @()
 $privateScripts = @()
+$transportScripts = @()
 
 if (Test-Path -LiteralPath $publicPath) {
     $publicScripts = @(
@@ -22,7 +24,14 @@ if (Test-Path -LiteralPath $privatePath) {
     )
 }
 
-$scriptsToLoad = @($privateScripts + $publicScripts)
+if (Test-Path -LiteralPath $transportPath) {
+    $transportScripts = @(
+        Get-ChildItem -LiteralPath $transportPath -Filter '*.ps1' -File -Recurse |
+            Sort-Object -Property FullName
+    )
+}
+
+$scriptsToLoad = @($privateScripts + $transportScripts + $publicScripts)
 foreach ($scriptItem in $scriptsToLoad) {
     try {
         . $scriptItem.FullName

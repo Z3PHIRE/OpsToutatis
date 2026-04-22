@@ -20,7 +20,10 @@
         'Test-OpsInventory',
         'Test-OpsPlaybook',
         'Set-OpsCredential',
-        'Get-OpsCredential'
+        'Get-OpsCredential',
+        'Invoke-OpsRemote',
+        'Test-OpsTarget',
+        'Get-OpsTargetInfo'
     )
     CmdletsToExport   = @()
     VariablesToExport = @()

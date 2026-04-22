@@ -37,11 +37,14 @@ Describe 'OpsToutatis module import' {
 
         $exportedCommands = @($module.ExportedCommands.Keys)
         $expectedCommands = @(
+            'Get-OpsTargetInfo',
             'Get-OpsCredential',
             'Import-OpsInventory',
             'Import-OpsPlaybook',
+            'Invoke-OpsRemote',
             'Set-OpsCredential',
             'Start-OpsToutatis',
+            'Test-OpsTarget',
             'Test-OpsInventory',
             'Test-OpsPlaybook'
         )
