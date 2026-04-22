@@ -1,0 +1,17 @@
+# PowerShell module artifacts
+*.nupkg
+*.psd1.bak
+*.psm1.bak
+
+# Test output
+TestResults/
+coverage.xml
+
+# Logs and runtime output
+logs/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
