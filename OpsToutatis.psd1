@@ -13,7 +13,7 @@
         'Core'
     )
 
-    FunctionsToExport = @()
+    FunctionsToExport = @('Start-OpsToutatis')
     CmdletsToExport   = @()
     VariablesToExport = @()
     AliasesToExport   = @()

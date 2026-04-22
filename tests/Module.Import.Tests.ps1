@@ -29,15 +29,19 @@ Describe 'OpsToutatis module import' {
         }
     }
 
-    It 'exports no public command in bootstrap phase' {
+    It 'exports Start-OpsToutatis command' {
         $module = Get-Module -Name OpsToutatis | Select-Object -First 1
         if ($null -eq $module) {
             throw 'Module is not loaded.'
         }
 
-        $exportedCommandCount = @($module.ExportedCommands.Keys).Count
-        if ($exportedCommandCount -ne 0) {
-            throw "Expected zero exported commands during bootstrap phase but found $exportedCommandCount."
+        $exportedCommands = @($module.ExportedCommands.Keys)
+        if (@($exportedCommands).Count -ne 1) {
+            throw "Expected exactly one exported command but found $(@($exportedCommands).Count)."
+        }
+
+        if ($exportedCommands[0] -ne 'Start-OpsToutatis') {
+            throw "Expected Start-OpsToutatis to be exported but found '$($exportedCommands[0])'."
         }
     }
 }
