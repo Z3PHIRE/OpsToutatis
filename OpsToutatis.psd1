@@ -13,7 +13,15 @@
         'Core'
     )
 
-    FunctionsToExport = @('Start-OpsToutatis')
+    FunctionsToExport = @(
+        'Start-OpsToutatis',
+        'Import-OpsInventory',
+        'Import-OpsPlaybook',
+        'Test-OpsInventory',
+        'Test-OpsPlaybook',
+        'Set-OpsCredential',
+        'Get-OpsCredential'
+    )
     CmdletsToExport   = @()
     VariablesToExport = @()
     AliasesToExport   = @()

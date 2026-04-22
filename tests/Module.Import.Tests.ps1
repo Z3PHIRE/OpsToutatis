@@ -29,19 +29,36 @@ Describe 'OpsToutatis module import' {
         }
     }
 
-    It 'exports Start-OpsToutatis command' {
+    It 'exports expected public commands' {
         $module = Get-Module -Name OpsToutatis | Select-Object -First 1
         if ($null -eq $module) {
             throw 'Module is not loaded.'
         }
 
         $exportedCommands = @($module.ExportedCommands.Keys)
-        if (@($exportedCommands).Count -ne 1) {
-            throw "Expected exactly one exported command but found $(@($exportedCommands).Count)."
+        $expectedCommands = @(
+            'Get-OpsCredential',
+            'Import-OpsInventory',
+            'Import-OpsPlaybook',
+            'Set-OpsCredential',
+            'Start-OpsToutatis',
+            'Test-OpsInventory',
+            'Test-OpsPlaybook'
+        )
+
+        $missingCommands = @()
+        foreach ($expectedCommand in $expectedCommands) {
+            if ($exportedCommands -notcontains $expectedCommand) {
+                $missingCommands += $expectedCommand
+            }
         }
 
-        if ($exportedCommands[0] -ne 'Start-OpsToutatis') {
-            throw "Expected Start-OpsToutatis to be exported but found '$($exportedCommands[0])'."
+        if (@($missingCommands).Count -gt 0) {
+            throw "Missing exported command(s): $($missingCommands -join ', ')."
+        }
+
+        if (@($exportedCommands).Count -ne @($expectedCommands).Count) {
+            throw "Expected $(@($expectedCommands).Count) exported commands but found $(@($exportedCommands).Count)."
         }
     }
 }
