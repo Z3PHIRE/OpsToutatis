@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="25" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2026-04-22" time="21:04:56">
+  <environment clr-version="4.0.30319.42000" user-domain="DIS-RUS" cwd="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis" platform="Microsoft Windows 11 Professionnel|C:\WINDOWS|\Device\Harddisk1\Partition3" machine-name="DIS-RUS" nunit-version="2.5.8.0" os-version="10.0.26200" user="Personne" />
+  <culture-info current-culture="fr-FR" current-uiculture="fr-FR" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="3.8701" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\Credential.Tests.ps1" executed="True" result="Success" success="True" time="2.2012" asserts="0" description="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\Credential.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="OpsToutatis credential wrapper" executed="True" result="Success" success="True" time="1.5089" asserts="0" description="OpsToutatis credential wrapper">
+            <results>
+              <test-case description="returns a pedagogical warning without throwing when SecretManagement is unavailable" name="OpsToutatis credential wrapper.returns a pedagogical warning without throwing when SecretManagement is unavailable" time="0.6369" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="supports Set/Get credential round-trip with SecureString" name="OpsToutatis credential wrapper.supports Set/Get credential round-trip with SecureString" time="0.8214" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\Inventory.Playbook.Tests.ps1" executed="True" result="Success" success="True" time="0.5603" asserts="0" description="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\Inventory.Playbook.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="OpsToutatis inventory and playbook engine" executed="True" result="Success" success="True" time="0.3772" asserts="0" description="OpsToutatis inventory and playbook engine">
+            <results>
+              <test-case description="imports and validates a valid inventory and playbook" name="OpsToutatis inventory and playbook engine.imports and validates a valid inventory and playbook" time="0.2319" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="returns a clear french error for invalid IP address in inventory" name="OpsToutatis inventory and playbook engine.returns a clear french error for invalid IP address in inventory" time="0.023" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="returns a clear french error when playbook references an unknown host" name="OpsToutatis inventory and playbook engine.returns a clear french error when playbook references an unknown host" time="0.0275" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="detects missing playbook file" name="OpsToutatis inventory and playbook engine.detects missing playbook file" time="0.0172" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="detects syntax errors with line information" name="OpsToutatis inventory and playbook engine.detects syntax errors with line information" time="0.0243" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="detects missing key, invalid type, missing reference and unsupported OS classes" name="OpsToutatis inventory and playbook engine.detects missing key, invalid type, missing reference and unsupported OS classes" time="0.0463" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\Module.Import.Tests.ps1" executed="True" result="Success" success="True" time="0.2026" asserts="0" description="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\Module.Import.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="OpsToutatis module import" executed="True" result="Success" success="True" time="0.1376" asserts="0" description="OpsToutatis module import">
+            <results>
+              <test-case description="imports without errors" name="OpsToutatis module import.imports without errors" time="0.12" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="exports expected public commands" name="OpsToutatis module import.exports expected public commands" time="0.008" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\Redaction.Tests.ps1" executed="True" result="Success" success="True" time="0.2493" asserts="0" description="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\Redaction.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="OpsToutatis redaction engine" executed="True" result="Success" success="True" time="0.0885" asserts="0" description="OpsToutatis redaction engine">
+            <results>
+              <test-case description="returns empty string when input is empty" name="OpsToutatis redaction engine.returns empty string when input is empty" time="0.015" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="masks password assignment values" name="OpsToutatis redaction engine.masks password assignment values" time="0.012" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="masks pwd assignment while preserving surrounding text" name="OpsToutatis redaction engine.masks pwd assignment while preserving surrounding text" time="0.0198" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="masks bearer token values" name="OpsToutatis redaction engine.masks bearer token values" time="0.0057" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="masks JWT tokens" name="OpsToutatis redaction engine.masks JWT tokens" time="0.0042" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="masks private key blocks" name="OpsToutatis redaction engine.masks private key blocks" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="masks argument after -AsCredential" name="OpsToutatis redaction engine.masks argument after -AsCredential" time="0.0061" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="does not alter regular sentence containing the word password" name="OpsToutatis redaction engine.does not alter regular sentence containing the word password" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="masks multiple sensitive patterns in one line" name="OpsToutatis redaction engine.masks multiple sensitive patterns in one line" time="0.0093" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\Session.Logger.Tests.ps1" executed="True" result="Success" success="True" time="0.4128" asserts="0" description="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\Session.Logger.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="OpsToutatis session and logger engine" executed="True" result="Success" success="True" time="0.2234" asserts="0" description="OpsToutatis session and logger engine">
+            <results>
+              <test-case description="creates expected session directory and log files" name="OpsToutatis session and logger engine.creates expected session directory and log files" time="0.1252" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="does not write logs to console without PassThru" name="OpsToutatis session and logger engine.does not write logs to console without PassThru" time="0.0261" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="never writes clear-text password in log files" name="OpsToutatis session and logger engine.never writes clear-text password in log files" time="0.0315" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="writes close summary with counters and duration" name="OpsToutatis session and logger engine.writes close summary with counters and duration" time="0.0347" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\UI.Tests.ps1" executed="True" result="Success" success="True" time="0.2438" asserts="0" description="C:\Users\Personne\OneDrive\Documents\Projets_Dev\Programme Web\jeux code html\OpsToutatis\V1\OpsToutatis\tests\UI.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="OpsToutatis UI engine" executed="True" result="Success" success="True" time="0.1862" asserts="0" description="OpsToutatis UI engine">
+            <results>
+              <test-case description="keeps plain banner rendering stable (golden file)" name="OpsToutatis UI engine.keeps plain banner rendering stable (golden file)" time="0.0648" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="falls back to plain mode when virtual terminal support is disabled" name="OpsToutatis UI engine.falls back to plain mode when virtual terminal support is disabled" time="0.0468" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
