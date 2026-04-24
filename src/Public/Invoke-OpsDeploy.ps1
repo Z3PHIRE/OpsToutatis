@@ -1,18 +1,25 @@
 function Invoke-OpsDeploy {
-    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
+    [CmdletBinding(DefaultParameterSetName = 'RoleTarget', SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'RoleTarget')]
         [Alias('RoleId')]
         [ValidateNotNullOrEmpty()]
         [string]$Role,
 
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $true, ParameterSetName = 'RoleTarget')]
         [AllowNull()]
         [object]$Target,
 
-        [Parameter()]
+        [Parameter(ParameterSetName = 'RoleTarget')]
         [AllowNull()]
         [hashtable]$DesiredParameters,
+
+        [Parameter(Mandatory = $true, ParameterSetName = 'Playbook')]
+        [ValidateNotNullOrEmpty()]
+        [string]$Playbook,
+
+        [Parameter(ParameterSetName = 'Playbook')]
+        [string]$InventoryPath,
 
         [Parameter()]
         [ValidateRange(1, 86400)]
@@ -28,6 +35,102 @@ function Invoke-OpsDeploy {
         [Parameter()]
         [switch]$PassThru
     )
+
+    if ($PSCmdlet.ParameterSetName -eq 'Playbook') {
+        $loadedPlaybook = $null
+        if ([string]::IsNullOrWhiteSpace($InventoryPath)) {
+            $loadedPlaybook = Import-OpsPlaybook -Path $Playbook -WhatIf:$false
+        }
+        else {
+            Import-OpsInventory -Path $InventoryPath -WhatIf:$false | Out-Null
+            $loadedPlaybook = Import-OpsPlaybook -Path $Playbook -InventoryPath $InventoryPath -WhatIf:$false
+        }
+
+        $playbookTable = ConvertTo-OpsPropertyTable -InputObject $loadedPlaybook.Data
+        if ($null -eq $playbookTable -or -not $playbookTable.ContainsKey('Targets')) {
+            throw "Playbook invalide '$Playbook' : clé Targets manquante."
+        }
+
+        $deploymentResults = @()
+        $targetEntries = @($playbookTable['Targets'])
+        $targetCount = @($targetEntries).Count
+        $targetIndex = 0
+
+        foreach ($targetEntry in $targetEntries) {
+            $targetIndex += 1
+            $targetEntryTable = ConvertTo-OpsPropertyTable -InputObject $targetEntry
+            if ($null -eq $targetEntryTable) {
+                throw "Entrée de playbook invalide à l'index $targetIndex."
+            }
+
+            if (-not $targetEntryTable.ContainsKey('Host')) {
+                throw "Entrée de playbook invalide à l'index $targetIndex : clé Host manquante."
+            }
+
+            if (-not $targetEntryTable.ContainsKey('Roles')) {
+                throw "Entrée de playbook invalide à l'index $targetIndex : clé Roles manquante."
+            }
+
+            $hostName = [string]$targetEntryTable['Host']
+            $roleList = @($targetEntryTable['Roles'])
+            if (@($roleList).Count -eq 0) {
+                throw "Entrée de playbook invalide pour l'hôte '$hostName' : au moins un rôle est requis."
+            }
+
+            Write-Information ("Cible {0}/{1}: {2}" -f $targetIndex, $targetCount, $hostName) -InformationAction Continue
+            $resolvedTarget = Resolve-OpsDeployTarget -Target $hostName
+
+            $roleParametersByName = $null
+            if ($targetEntryTable.ContainsKey('Parameters')) {
+                $roleParametersByName = ConvertTo-OpsPropertyTable -InputObject $targetEntryTable['Parameters']
+            }
+
+            foreach ($roleName in $roleList) {
+                $roleNameText = [string]$roleName
+                if ([string]::IsNullOrWhiteSpace($roleNameText)) {
+                    throw "Nom de rôle vide détecté pour l'hôte '$hostName'."
+                }
+
+                Write-Information ("Exécution du rôle '{0}' sur '{1}'..." -f $roleNameText, $hostName) -InformationAction Continue
+
+                $invokeArguments = @{
+                    Role           = $roleNameText
+                    Target         = $resolvedTarget
+                    TimeoutSec     = $TimeoutSec
+                    NonInteractive = $NonInteractive.IsPresent
+                    PassThru       = $true
+                    Confirm        = $false
+                }
+
+                if (-not [string]::IsNullOrWhiteSpace($RiskConfirmation)) {
+                    $invokeArguments['RiskConfirmation'] = $RiskConfirmation
+                }
+
+                if ($null -ne $roleParametersByName -and $roleParametersByName.ContainsKey($roleNameText)) {
+                    $roleSpecificParameters = ConvertTo-OpsPropertyTable -InputObject $roleParametersByName[$roleNameText]
+                    if ($null -ne $roleSpecificParameters) {
+                        $invokeArguments['DesiredParameters'] = $roleSpecificParameters
+                    }
+                }
+
+                $deploymentResults += Invoke-OpsDeploy @invokeArguments
+            }
+        }
+
+        $playbookResult = [pscustomobject]@{
+            PlaybookPath        = [string]$loadedPlaybook.Path
+            TargetCount         = $targetCount
+            RoleInvocationCount = @($deploymentResults).Count
+            WasWhatIf           = [bool]$WhatIfPreference
+            Results             = @($deploymentResults)
+        }
+
+        if ($PassThru.IsPresent) {
+            return $playbookResult
+        }
+
+        return $playbookResult
+    }
 
     $roleDefinition = Import-OpsRoleDefinition -RoleId $Role
     $resolvedTarget = Resolve-OpsDeployTarget -Target $Target

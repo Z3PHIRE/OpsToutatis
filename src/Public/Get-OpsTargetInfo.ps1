@@ -134,6 +134,9 @@ function Get-OpsTargetInfo {
             elseif ($distributionRaw -match '2019') {
                 $normalizedDistribution = 'WindowsServer2019'
             }
+            elseif ($distributionRaw -match '2016') {
+                $normalizedDistribution = 'WindowsServer2016'
+            }
             else {
                 $normalizedDistribution = 'Windows'
             }

@@ -619,11 +619,11 @@ function Get-OpsDefaultParametersFromSchema {
             if ($parameterValue -is [SecureString]) {
                 $defaults[$parameterName] = $parameterValue
             }
-            elseif ($null -ne $parameterValue) {
+            elseif ($null -ne $parameterValue -and -not [string]::IsNullOrWhiteSpace([string]$parameterValue)) {
                 $defaults[$parameterName] = ConvertTo-SecureString -String ([string]$parameterValue) -AsPlainText -Force
             }
             else {
-                $defaults[$parameterName] = ConvertTo-SecureString -String '' -AsPlainText -Force
+                $defaults[$parameterName] = New-Object System.Security.SecureString
             }
         }
         else {
